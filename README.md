@@ -1,16 +1,16 @@
 # Interactive-Graph-Cuts-for-Object-Semgmentation
-This Repository implements a Interactive Graph Cuts Model for binary segmentation as described in the Paper "https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf". Main Idea is to find parameters of a energy function which lead to its minimum energy by constructing an (s,t)-graph whose cut value equals the enery of this function.
+This Repository implements a Interactive Graph Cuts Model for binary segmentation as described in the [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). Main Idea is to find parameters of a energy function which lead to its minimum energy by constructing an (s,t)-graph whose cut value equals the energy of this function.
 
-Problem Description:
+# Problem Description:
 
 Assume one got a markov network with a corresponding energy function to classify an image into "object" and "background" segments. Finding an optimal constellation of the parameters of the markov network is np-hard.
 
-Solution:
+# Solution:
 
 One builds an corresponding (s,t)-graph such that for every parameter in the energy function there is exactly one corresponding node in the (s,t)-graph. Since for every parameter configuration in the energy function (assignment of all pixels to either object or background) there exists one corresponding (s,t)-cut with every node either belonging to set s or t and vice versa one can say that if the value of any parameter configuration equals the value of the corresponding cut, then finding the minimum (s,t)-cut will be equal to finding the optimal parameter configuration.
 
 
-How does the cut value of the (s,t)-graph equal the value of the energy function ?
+# How does the cut value of the (s,t)-graph equal the value of the energy function ?
 
 For visualizing we represent the energy function as the following markov network. It and its corresponding (s,t)-graph can be visualized.
 
@@ -20,24 +20,23 @@ The markov network consits of "parameter nodes" (blue), whose optimal constellat
 
 Also every parameter node is connected to one "class node" (orange), which value is fixed. The weight of this edge corresponds to some measurement that the assignment of the parameter node is correct (based on class properties). The sum of all edges is then the energy of the model.
 
-In the (s,t)-graph every pixel in the image also got a corresponding node. Later, the assignment of the pixel to either set s or t will correspond to a assignment of the value foreground or background of this pixel. Also every parameter node (all non terminal nodes) in the (s,t)-graph is connected to the two terminal nodes, s and t.
+In the (s,t)-graph every pixel in the image also got a corresponding node, which we will call pixel node. Later, the assignment of this node to either set s or t will correspond to a assignment of the value foreground or background of the corresponding pixel. Also every parameter node in the (s,t)-graph is connected to the two terminal nodes, s and t.
 
-Lets look at some properties of any (s,t)-cut of this graph and show that we can choose faktors(edge values) for the described markov network, such that its energy value will be equal to the cut of the corresponding (s,t)-graph 
+Lets now create an energy function for the described markov network such that we can represent it as (s,t)-graph 
 
-(1) Sum of (capacity of) terminal cuts should be equal to the energy between parameter nodes to class nodes
+(1) Sum of energy from edges between parameter nodes and class nodes must be equal to the capacity of terminal cuts in the (s,t)-graph 
 
-Assume the assignment of a parameter node yields to some energy between it and its class node. In the (s,t)-graph one can then assign the edge between a pixel node and a terminal node a corresponding capacity, such that the cut of this edge would have the same cost as assigning the node to the opposite terminal. 
+Assume the assignment of a parameter node yields to some energy between it and its class node. In the (s,t)-graph one can then assign the edge between a pixel node and a terminal node a corresponding capacity, such that the cut of this edge would have the same cost as assigning the node to the opposite terminal. Since one needs to cut exactly one terminal node from each pixel node, these terms will then be equal.
 
-(2) Sum of neighboring-cuts should be equal to the energy between parameter nodes
+(2) Sum of energy between parameter nodes must be equal to the sum of non-terminal cuts in the (s,t)-graph 
 
-Fo this we must chose the energy between two parameter nodes in the markov network to be zero when theys have the same assignment {foreground or background}, so the edge  increases the energy of the markov network if and only if two neighboring nodes are assigned to different classes. The edge value of two neigbooured pixel-nodes is only included in the cut if these two are assigned to a different (s,t)-set (class). So if two parameter nodes in the markov network have a different assignment one can chose any energy value and then set the value in the (s,t)-graph to the same value.  
-
-
-So we create an energy function fullfilling this criteria with the corresponding (s,t)-graph and then find the optimal parameter configuration with the min (s,t)-cut of the graph.
+Fo this we must chose the energy between two parameter nodes in the markov network to be zero when theys have the same assignment {foreground or background}, so the edge increases the energy of the markov network if and only if two neighboring nodes are assigned to different classes. The edge value of two neigbooured pixel-nodes is only included in the cut if these two are assigned to a different (s,t)-set (class). So if two parameter nodes in the markov network have a different assignment one can chose any energy value and then set the value in the (s,t)-graph to the same value.  
 
 (for a more rigorous proof see the paper)
 
-Results:
+# Results:
+We created an energy function fullfilling this criteria with the corresponding (s,t)-graph and then found the optimal parameter configuration with the min (s,t)-cut of the graph.
+
 For the capacity between two non-terminal nodes we computed a measurement of how good these two fit to each other.
 We use the function:  α*(-1.5*math.log(diff)+10)  
 
@@ -48,11 +47,11 @@ Finally we use α to synchronize this term with the capacity between to non-term
 
 For the capacity between a terminal and non-terminal node we used a probability measurement of how likely it is that pixel belongs to the opposite certain terminal, which works only for integer-pixel values. Also every click from the user selects 21*21 Pixel as seed, so this likelihood can be computed more accurately. We clicked three times on each for- and background for this results.
 
-Results:
-α=1
+Results (α=1):
+
 ![image](https://user-images.githubusercontent.com/101547425/160604450-813bc513-74e1-47eb-9152-5a97a33ee56f.png)
 
-![image](https://user-images.githubusercontent.com/101547425/160605114-520c6edb-5089-426f-ac99-3d861dc1791e.png)
+![image](https://user-images.githubusercontent.com/101547425/160655269-d7086180-6a85-4f4d-9447-494a917a4480.png)
 
 ![image](https://user-images.githubusercontent.com/101547425/160605628-28a6c29f-f6fb-4c61-99a1-493ae4514041.png)
 
