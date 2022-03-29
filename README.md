@@ -1,5 +1,5 @@
 # Interactive-Graph-Cuts-for-Object-Semgmentation
-This Repository implements a Interactive Graph Cuts Model for binary segmentation as described in the [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). Main Idea is to find parameters of a energy function which lead to its minimum energy by constructing an (s,t)-graph whose cut value equals the energy of this function.
+This Repository implements an Interactive Graph Cuts Model for binary segmentation as described in the [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). Main Idea is to find parameters of a energy function which lead to its minimum energy by constructing an (s,t)-graph whose cut value equals the energy of this function.
 
 # Problem Description:
 
@@ -12,7 +12,7 @@ One builds an corresponding (s,t)-graph such that for every parameter in the ene
 
 # How does the cut value of the (s,t)-graph equal the value of the energy function ?
 
-For visualizing we represent the energy function as the following markov network. It and its corresponding (s,t)-graph can be visualized.
+For visualizing we represent the energy function as the following markov network. It and its corresponding (s,t)-graph can be visualized as follows:
 
 ![image](https://user-images.githubusercontent.com/101547425/160617011-2a1a9ef8-b45d-414e-aab9-4958011e4bf2.png)
 
@@ -35,14 +35,15 @@ Fo this we must chose the energy between two parameter nodes in the markov netwo
 (for a more rigorous proof see the paper)
 
 # Results:
-We created an energy function fullfilling this criteria with the corresponding (s,t)-graph and then found the optimal parameter configuration with the min (s,t)-cut of the graph.
+We created directly the (s,t)-graph of an energy function and then found the optimal parameter configuration of it with the min (s,t)-cut of the graph.
 
 For the capacity between two non-terminal nodes we computed a measurement of how good these two fit to each other.
 We use the function:  α*(-1.5*math.log(diff)+10)  
 
 Diff is the squared distance between the two pixels. We took it because it is exponentially decreasing, so the capacity between to very similar pixel is very high. Its max value is (nearly) equal to the max. terminal-capacity (with α=1).
 
-Also we set the max value of the squared-diff to 780, so that the formula can t have negative values and we set its min value to some very small number (such that term can t be zero). So it is very expensive to cut similar pixels but all squared-differences > 780 have no differences in the capacities.
+Also we set the max value of diff to 780, so that the formula can t have negative values and we set its min value to some very small number (such that term can t be zero). 
+
 Finally we use α to synchronize this term with the capacity between to non-terminal-edges.
 
 For the capacity between a terminal and non-terminal node we used a probability measurement of how likely it is that pixel belongs to the opposite certain terminal, which works only for integer-pixel values. Also every click from the user selects 21*21 Pixel as seed, so this likelihood can be computed more accurately. We clicked three times on each for- and background for this results.
