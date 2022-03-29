@@ -1,5 +1,5 @@
 # Interactive-Graph-Cuts-for-Object-Semgmentation
-This Repository implements an Interactive Graph Cuts Model for binary segmentation as described in the [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). Main Idea is to find parameters of a energy function which lead to its minimum energy by constructing an (s,t)-graph whose cut value equals the energy of this function.
+This Repository implements an Interactive Graph Cuts Model for binary image segmentation as described in the [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). Main Idea is to find parameters of a energy function which lead to its minimum energy by constructing an (s,t)-graph whose cut value equals the energy of this function.
 
 # Problem Description:
 
