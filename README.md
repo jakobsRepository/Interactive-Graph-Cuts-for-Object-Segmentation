@@ -46,7 +46,7 @@ Also we set the max value of diff to 780, so that the formula can t have negativ
 
 Finally we use α to synchronize this term with the capacity between to non-terminal-edges.
 
-For the capacity between a terminal and non-terminal node we used a probability measurement of how likely it is that pixel belongs to the opposite certain terminal, which works only for integer-pixel values. Also every click from the user selects 21*21 Pixel as seed, so this likelihood can be computed more accurately. We clicked three times on each for- and background for this results.
+For the capacity between a terminal and non-terminal node we used a probability measurement of how likely it is that a pixel belongs to the opposite  terminal, which works only for integer-pixel values. Also every click from the user selects 21*21 Pixel as seed, so this likelihood can be computed more accurately. We clicked three times on each for- and background for this results.
 
 Results (α=1):
 
