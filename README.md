@@ -1,5 +1,5 @@
 # Interactive Graph Cuts for Object Segmentation
-This Repository implements an Interactive Graph Cuts Model for binary image segmentation whose optimal parameters are found with the metohod described in the [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). 
+This Repository implements an Interactive Graph Cuts Model for binary image segmentation as described in this [Paper](https://www.csd.uwo.ca/~yboykov/Papers/iccv01.pdf). 
 
 # Problem Description:
 
